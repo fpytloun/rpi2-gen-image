@@ -116,6 +116,10 @@ if [ "$ENABLE_MINGPU" = true ] ; then
   echo "gpu_mem=16" >>$R/boot/firmware/config.txt
 fi
 
+if [ "$KERNEL_ARCH" = arm64 ]; then
+  echo "arm_control=0x200" >>$R/boot/firmware/config.txt
+fi
+
 # Create firmware configuration and cmdline symlinks
 ln -sf firmware/config.txt $R/boot/config.txt
 ln -sf firmware/cmdline.txt $R/boot/cmdline.txt
