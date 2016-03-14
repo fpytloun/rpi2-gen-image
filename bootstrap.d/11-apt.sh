@@ -11,13 +11,12 @@ if [ -z "$APT_PROXY" ] ; then
   sed -i "s/\"\"/\"${APT_PROXY}\"/" $R/etc/apt/apt.conf.d/10proxy
 fi
 
-# Install APT pinning configuration for flash-kernel package
-install_readonly files/apt/flash-kernel $R/etc/apt/preferences.d/flash-kernel
-
-# Upgrade collabora package index and install collabora keyring
-echo "deb https://repositories.collabora.co.uk/debian ${RELEASE} rpi2" >$R/etc/apt/sources.list
+chroot_exec apt-get install -qq -y wget
+echo "deb http://apt.tcpcloud.eu/debian/ ${RELEASE} rpi" > $R/etc/apt/sources.list.d/tcpcloud.list
+chroot_exec wget http://apt.tcpcloud.eu/public.gpg
+chroot_exec apt-key add public.gpg
+chroot_exec rm -f public.gpg
 chroot_exec apt-get -qq -y update
-chroot_exec apt-get -qq -y --force-yes install collabora-obs-archive-keyring
 
 # Install APT sources.list
 install_readonly files/apt/sources.list $R/etc/apt/sources.list
