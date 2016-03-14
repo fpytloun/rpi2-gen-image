@@ -56,7 +56,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
 
   # Install kernel headers
   if [ "$KERNEL_HEADERS" = true ] ; then
-    make -C $R/usr/src/linux ARCH=${KERNEL_ARCH} CROSS_COMPILE=${CROSS_COMPILE} INSTALL_HDR_PATH=../.. headers_install
+    make -C $R/usr/src/linux ARCH=${KERNEL_ARCH} CROSS_COMPILE=${CROSS_COMPILE} INSTALL_HDR_PATH=../../.. headers_install
   fi
 
   # Copy and rename compiled kernel to boot directory

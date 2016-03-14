@@ -153,7 +153,7 @@ fi
 
 # Add packages required for kernel cross compilation
 if [ "$BUILD_KERNEL" = true ] ; then
-  REQUIRED_PACKAGES="${REQUIRED_PACKAGES} crossbuild-essential-armhf"
+  REQUIRED_PACKAGES="${REQUIRED_PACKAGES} crossbuild-essential-${RELEASE_ARCH}"
   if [ "$KERNEL_MENUCONFIG" = true ] ; then
     REQUIRED_PACKAGES="${REQUIRED_PACKAGES} ncurses-dev"
   fi
