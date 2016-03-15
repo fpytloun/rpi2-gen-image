@@ -1,9 +1,14 @@
 #
 # First boot actions
+# XXX: should be done by systemd-firstboot since stretch
 #
 
 # Load utility functions
 . ./functions.sh
+
+# Generate /etc/machine-id on boot
+install_readonly files/firstboot/systemd-machine-id-setup.service $R/etc/systemd/system/systemd-machine-id-setup.service
+chroot_exec systemctl enable systemd-machine-id-setup.service
 
 # Prepare rc.firstboot script
 cat files/firstboot/10-begin.sh > $R/etc/rc.firstboot
