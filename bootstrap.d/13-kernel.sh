@@ -21,7 +21,11 @@ if [ "$BUILD_KERNEL" = true ] ; then
     fi
   else # KERNEL_SRCDIR=""
     # Fetch current raspberrypi kernel sources
-    git -C $R/usr/src clone --depth=1 https://github.com/raspberrypi/linux
+    GIT_OPTS="--depth=1"
+    if [ ! -z "$KERNEL_BRANCH" ]; then
+      GIT_OPTS="${GIT_OPTS} -b ${KERNEL_BRANCH}"
+    fi
+    git -C $R/usr/src clone ${GIT_OPTS} https://github.com/raspberrypi/linux
   fi
 
   # Calculate optimal number of kernel building threads
@@ -58,6 +62,14 @@ if [ "$BUILD_KERNEL" = true ] ; then
   if [ "$KERNEL_HEADERS" = true ] ; then
     make -C $R/usr/src/linux ARCH=${KERNEL_ARCH} CROSS_COMPILE=${CROSS_COMPILE} INSTALL_HDR_PATH=../../.. headers_install
   fi
+
+  # Fix symlinks to be relative after installation
+  _curdir=$(pwd)
+  cd $R/lib/modules/*
+  rm build source
+  ln -s ../../../usr/src/linux build
+  ln -s ../../../usr/src/linux source
+  cd $_curdir
 
   # Copy and rename compiled kernel to boot directory
   mkdir $R/boot/firmware/

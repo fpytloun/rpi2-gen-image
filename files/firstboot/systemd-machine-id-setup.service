@@ -4,7 +4,7 @@ Documentation=man:systemd-machine-id-setup(1)
 DefaultDependencies=no
 Conflicts=shutdown.target
 Before=sysinit.target shutdown.target
-After=local-fs.target
+After=local-fs.target remote-fs.target
 ConditionPathIsReadWrite=/etc
 
 [Service]
@@ -12,3 +12,6 @@ Type=oneshot
 RemainAfterExit=yes
 ExecStart=/bin/systemd-machine-id-setup
 TimeoutSec=30s
+
+[Install]
+WantedBy=multi-user.target
