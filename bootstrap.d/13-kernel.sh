@@ -69,6 +69,11 @@ if [ "$BUILD_KERNEL" = true ] ; then
   cp $R/usr/src/linux/arch/${KERNEL_ARCH}/boot/dts/overlays/*.dtb* $R/boot/firmware/overlays/
   cp $R/usr/src/linux/arch/${KERNEL_ARCH}/boot/dts/overlays/README $R/boot/firmware/overlays/
 
+  # Clean the kernel sources
+  if [ "$KERNEL_CLEANSRC" = true ] ; then
+    make -C $R/usr/src/linux ARCH=${KERNEL_ARCH} CROSS_COMPILE=${CROSS_COMPILE} mrproper
+  fi
+
   # Remove kernel sources
   if [ "$KERNEL_RMSRC" = true ] ; then
     rm -fr $R/usr/src/linux
