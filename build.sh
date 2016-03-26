@@ -110,7 +110,7 @@ R=${BUILDDIR}/chroot
 CHROOT_SCRIPTS=${CHROOT_SCRIPTS:=""}
 
 # Packages required for bootstrapping
-REQUIRED_PACKAGES="debootstrap debian-archive-keyring qemu-user-static binfmt-support dosfstools rsync bmap-tools whois git-core"
+REQUIRED_PACKAGES="debootstrap debian-archive-keyring qemu-user-static binfmt-support dosfstools rsync bmap-tools whois git"
 
 # Missing packages that need to be installed
 MISSING_PACKAGES=""
